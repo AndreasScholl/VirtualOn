@@ -44,7 +44,7 @@ public class Importer : MonoBehaviour
 
         for (int index = 0; index < filesToImport.Length; index += 2)
         {
-            GameObject importedObject = ImportVirtualOnFile(filesToImport[index], LWRAM, filesToImport[index + 1]);
+            GameObject importedObject = ImportVirtualOnFile(filesToImport[index], LWRAM, filesToImport[index + 1]);     // , true, "JAG1PFX2.BIN", 0x60a0000
             importedObject.transform.position = new Vector3(index * 2f, 0f, 0f);
         }
     }
@@ -734,14 +734,6 @@ public class Importer : MonoBehaviour
 
             Mesh mesh = part.CreateMesh();
 
-            //if (mesh != null)
-            //{
-            //    if (part.DidNotProvideNormals)
-            //    {
-            //        mesh.RecalculateNormals(60f);
-            //    }
-            //}
-
             partObject = new GameObject("part" + partIndex);
             partObject.SetActive(true);
 
@@ -755,7 +747,7 @@ public class Importer : MonoBehaviour
                 partObject.transform.parent = modelData.Parts[part.Parent].OpaqueObject.transform;
             }
             partObject.transform.localPosition = part.Translation;
-            partObject.transform.localScale = new Vector3(1f, 1f, 1f);
+            partObject.transform.localScale = new Vector3(-1f, 1f, 1f);
 
             if (mesh != null)
             {

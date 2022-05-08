@@ -1,0 +1,472 @@
+tem_win.bin		
+	-> animation data (winning animation?)
+
+tem1.bin
+	some tables and code
+	
+tem1vs.bin
+	-> many pointers at start
+	-> seems to be various data, no xpdata 
+	-> probably no poly data
+	
+	
+TEM1PFX1.BIN -> 06070000 (location)
+TEM1PFX2.BIN -> 060a0000 (location)
+	-> contains geometry data
+	
+temtd1p1.bin -> vdp1 offset 30b00
+	
+hwram-dump
+
+060314dc -> start of some vectors?
+
+clear out:
+-> 0605c400
+
+NASU Box Model debug: 
+06066f5c -> number of points (00000027)
+06066f60 -> points-table
+
+points-table format:	word word word
+
+0606704c -> number of polygons (00000020)
+06067050 -> polygons-table: attributes and indices
+to
+06067150
+
+polygons-table-format   word word byte byte byte byte
+						tex? ?    idx1 idx2 idx3 idx4
+		 
+polygon table dump:
+E0206822 24251200 E1304822 1D1B0117 
+E2404922 1F1E0510 E1306822 22231404 
+E3746940 161A0C07 E5B46822 1C1B0113 
+E6C46822 25261112 E7D46822 261C1311 
+E3746940 0B021518 E3746940 080B1819 
+E3746940 0D08191A E1304822 24231400 
+E1306822 1D1E0517 E2406922 2022040F 
+E2406922 1F210E10 E2404922 20210E0F 
+E3746940 1815060A E3746940 19180A09 
+E3746940 1A19090C E3746940 030D1A16 
+E8E44822 16031B1D E8E46822 16071E1D 
+E9F44922 0C071E1F E9F46922 0C09211F 
+E9F44922 0A092120 E9F46922 0A062220 
+E8E44822 15062223 E8E46822 15022423 
+EB286822 020B2524 EC386822 0B082625 
+ED486822 080D1C26 EE586822 0D031B1C
+
+point-table dump:
+00000027 
+C604 0000 11FC 
+C604 0000 EE03 
+C604 0985 11FC 
+C604 0985 EE03 
+D5FB 0000 11FC 
+D5FB 0000 EE03 
+D5FB 0985 11FC 
+D5FB 0985 EE03 
+C604 0985 0000 
+D5FB 0985 0000 
+D5FB 0985 08FE 
+C604 0985 08FE 
+D5FB 0985 F701 
+C604 0985 F701 
+D5FB 0000 0000 
+D5FB 0000 08FE 
+D5FB 0000 F701 
+C604 0000 0000 
+C604 0000 08FE 
+C604 0000 F701 
+CDFF 0000 11FC 
+CDFF 0985 11FC 
+CDFF 0985 EE03 
+CDFF 0000 EE03 
+CDFF 0985 08FE 
+CDFF 0985 0000 
+CDFF 0985 F701 
+C604 04C2 EE03 
+C604 04C2 F701 
+CDFF 04C2 EE03 
+D5FB 04C2 EE03 
+D5FB 04C2 F701 
+D5FB 0476 08FE 
+D5FB 04C2 0000 
+D5FB 04C2 11FC 
+CDFF 04C2 11FC 
+C604 04C2 11FC 
+C604 04C2 08FE 
+C604 04C2 0000 0000
+
+----------------------------------
+TEM1PMM1.BIN -> Temjin model
+
+at A04 -> 00201278 pointer to upper leg model
+		  06081894 pointer to hwram copy location of upper leg model
+
+002012D8 -> foot points 
+00201390 -> foot polygons
+
+060816D0
+06081B18
+
+R02 =  060DC008
+
+Function (executed by slave sh2)
+	   060d64e8
+
+       060d650e -> read point count into r4
+       mov.l @r8+, r4
+
+PC =   060D6530	-> read polygon count into r4
+       mov.l @r8+, r4
+
+PC =   060D6570 -> read polygon index (loop for all 4 indices)
+
+
+---------------------------
+
+table at 7c0 of tem1pmm1 is referencing model parts:
+
+7c0
+002018E0 060811E8 00201AF4 00201AF4 
+head     head-lo  shouldr? shouldr?
+
+7d0
+00202110 00202110 002026A4 002026A4
+backpack backpack backopn1 backopn1
+ 
+7e0
+00202584 00202584 00202110 00202110
+backopn2 backopn2 backpack backpack
+
+7f0 
+06081D14 06081D14 06081E9C 06081E9C
+backani1 backani1 backani2 backani2
+
+800
+06082024 06082024 0608221C 0608221C 
+backani3 backani3 backani4 backani4
+
+810
+06082414 06082414 00202110 00202110 
+backani5 backani5 backpack backpack
+
+820
+06081D14 06081D14 06081E9C 06081E9C 
+backani1 backani1 backani2 backani2
+
+830
+06082024 06082024 0608221C 0608221C 
+840
+06082414 06082414 002026A4 002026A4 
+				  backpkan
+850
+0608260C 0608260C 0608273C 0608273C 
+860
+0608286C 0608286C 06082A0C 06082A0C 
+870
+06082BAC 06082BAC 00201DBC 00201DBC 
+				  rifle
+880
+002027C4 002027C4 002027C4 002027C4
+sword	          sword    
+890
+002027C4 002027C4 002027C4 002027C4 
+8a0
+002027C4 002027C4 002027C4 002027C4 
+8b0
+002027C4 002027C4 002027C4 002027C4 
+8c0
+00201C14 06081400 00201B5C 06081510 
+lowarml           uprarml  
+8d0
+00201BB4 00201BB4 00201BB4 00201BB4 
+handl             handl    
+8e0
+00201BB4 00201BB4 00201BB4 00201BB4 
+8f0
+00201BB4 00201BB4 00201BB4 00201BB4 
+900
+00201BB4 00201BB4 00201BB4 00201BB4 
+910
+00201BB4 00201BB4 00201BB4 00201BB4 
+920
+00201BB4 00201BB4 00201BB4 00201BB4 
+930
+00201BB4 00201BB4 00201BB4 00201BB4 
+940
+00201BB4 00201BB4 00201BB4 00201BB4 
+950
+00201BB4 00201BB4 00201BB4 00201BB4 
+960
+00201BB4 00201BB4 00201BB4 00201BB4 
+970
+00201BB4 00201BB4 00201BB4 00201BB4 
+980
+00201BB4 00201BB4 00201BB4 00201BB4 
+990
+00201BB4 00201BB4 00201BB4 00201BB4 
+9a0
+00201BB4 00201BB4 00201BB4 00201BB4 
+9b0
+00201BB4 00201BB4 00201BB4 00201BB4 
+9c0
+00201BB4 00201BB4 00202028 06081568 
+                  lowarmr
+9d0
+00201D64 06081678 00201FC8 00201FC8
+upparmr           handr
+ 
+9e0
+00201FC8 00201CFC 00201CFC 00202170 
+         shouldrl          chest
+9f0
+06081B18 002012D8 060816D0 0020146C 
+         footl
+a00
+060817C4 00201278 06081894 0020160C 
+a10
+060818F4 002017A0 060819E8 002015AC 
+a20
+06081AB8 0020233C 060810FC 00000000
+
+
+--------------------
+rigging
+
+    head    upper    lower
+00200A2C 00200A44 00200ACC 00200B0C 
+00200B18 00200B58 00201208 0311080E
+
+(tem)
+00200A2C:
+00000000 FFFFFFFF 
+00000001 002007C0
+		 (head)
+00000000 00000005
+
+(fei)
+00000000 FFFFFFFF 
+00000001 00200818
+
+(tem)
+00200A44:
+00000000 FFFFFFFF 
+00000001 002007C8 (shoulder-right)
+00000001 002007D0 
+00000005 (backpack)
+00200878 00000001 (rifle)
+002008C0 00000001 (low-arm-left)
+002008C8 00000001 (upper-arm-left) 
+002008D0 00000001 (hand-left)
+002009C8 00000001 (low-arm-right)
+002009D0 00000001 (upp-arm-right)
+002009D8 00000001 (hand-right)
+002009E4 00000001 (shoulder-left)
+002009EC 00000000 (chest)
+00000003 00000000 
+00000002 00000000 
+00000001 00000000 
+00000004 00000000 
+00000005
+
+(tem lower)
+00200ACC:
+00000002 002009F4  (foot-left)
+00000002 002009FC 
+00000002 00200A04 
+00000002 00200A0C 
+00000002 00200A14 
+00000002 00200A1C 
+00000002 00200A24 
+00000000 00000000
+
+(fei lower)
+00000002 00200B1C 
+00000002 00200B24 
+00000002 00200B2C 
+00000002 00200B34 
+00000002 00200B3C 
+00000002 00200B44 
+00000002 00200B4C 
+00000000 00000000
+
+00200B0C:
+FFFFFFFF 002007B8 00000005 (null-ptr)
+
+00200B18:
+FFFFFFFF 
+002007B8 002007B8 002007B8 002007B8 (null-ptr)
+002007B8 002007B8 002007B8 002007B8 
+002007B8 002007B8 002007B8 
+00000003 00000002 00000001 00000004
+
+
+002034B4 002036B4 002038B4 00203AB4 
+plt1-blu plt2-red blue     red
+
+002067e4 to
+002076E4 
+upper body stand anim.
+
+002076E4 002535EC 00207AAC 002537F4 
+ubodystd lbodystd
+		 002535EC -> 00252dec (start of anim), size 0x800 / 0x20 = 40 per frame
+					 0020 (no. of frames) 
+					 0008 (no. of transforms?) -> 08 for lower body, 0f for upper body
+
+00207E74 002539FC 00207AAC 002537F4 
+00207AAC 002537F4 0020823C 00253C04
+
+----------------------------
+PC =   060D3A84 (anim function)
+lo-nibble of byte 0 << 4
+or byte 5 << 8
+
+hi-nibble of byte 1
+or byte 6 << 8
+
+lo-nibble of byte 1 << 4
+or byte 7 << 8
+-----
+bit-8 of byte 0
+or              
+byte 2 << 8
+
+bit-7 of byte 0 << 1
+or              
+byte 3 << 8
+
+bit-6 of byte 0 << 2
+or              
+byte 4 << 8
+
+-------------------------------
+Lower body anim debug:
+
+00252dec (lower body stand anim, 0x20 frames, 0x08 transforms)
+002535EC
+
+"Frame 1"
+left foot         | left lower leg
+424A0002 00FE0107 | A7130B00 02FE0605
+bits| |  | | | |
+	xrot | x y z
+	  |  | 
+	  yrot
+		 |
+		 zrot
+                    (252e04)
+left upper leg    | right foot
+2CC03700 02FE0902 | A953FFDF FF0101FB 
+
+					(252e14)
+right lower leg	  | right upper leg						 
+0C89D5E3 EF0104FC | 0EEC00E3 EF0108FE 
+
+(252e1c)            (252e24)
+hip               | upper body root
+25E101E6 FF000900 | 212D01E6 FF000BFF 
+
+-------------------------------
+Upper body anim debug:
+
+002067e4 (upper body stand anim, 0x20 frames, 0x0f transforms)
+002076E4 
+
+"Frame 1"
+(2067e4)            (2067ec)
+upper body root     left shoulder
+212D01E6 FF000BFF | 0634FFE6 00FC0F01
+bits| |  | | | |
+	xrot | x y z
+	  |  | 
+	  yrot
+		 |
+		 zrot
+
+(2067f4)            (2067fc)
+backpack            rifle (right hand weapon)
+2D31FFE6 FFFE0EFE | A4322EF4 FA060A01 
+
+(206804)            (20680c)
+left lower arm      left upper arm
+613733F2 15FB0C02 | E42803F2 15FB0D01 
+
+(206814)            (20681c)
+left hand			right lower arm
+A12E45F3 18FC0C04 | 28840CDC F0030BFC 
+
+(206824)            (20682c)
+right upper arm		right hand
+AEE3F0DC F0020CFC | A35A2EF4 FA050AFD 
+
+(206834)            (20683c)
+right shoulder      chest
+2E20FFE6 FF020FFD | 2DD6FFE6 FFFF0DFF 
+
+(206844)            (20684c)
+???thrust???        ???sword???
+222206F3 18FC0C05 | A559EEF4 FA0A050C 
+
+(206854)
+head
+8930FF00 00FF11FF 
+
+"Frame 2"
+212D01E6 FF000BFF 8635FFE6 00FC0F01 
+2D31FFE6 FFFE0EFE 25422EF4 FA060A01 
+414835F2 16FB0C02 442804F2 16FB0D01 
+024E47F3 19FC0C04 68940CDC F0030BFC 
+EEF3F0DC F0020CFC 235A2EF4 FA050AFD 
+2E30FFE6 FF020FFD 2DD6FFE6 FFFF0DFF 
+035208F3 19FC0C05 2558EEF4 FA0A050C 
+8930FF00 00FF11FF 
+
+-----
+model parts by index
+
+0: left upper leg
+1: left foot
+2: left lower leg
+3: right upper leg
+4: right foot
+5: right lower leg
+6: head
+7: left shoulder
+8: left upper leg
+9: left hand
+10: left lower arm
+11: right shoulder
+12: right upper arm
+13: beam rifle
+14: right hand
+15: right lower arm
+16: backpack
+17: chest
+18: hip
+21: sword
+22: thrust
+
+----------
+textures debug (polygon attributes)
+
+202110 -> backpack points
+202144 ->          polygons
+202150 744C 66 28
+		  | |   height
+		  | and 0x20
+          test bit 0 -> skip something
+		  
+first word * 8 = texture offset - 30b00
+second word hi-byte * 8 = width
+second word lo-byte = height
+there are probably some bits could do something
+
+----------------------------------------
+upper body
+-> part unter upperbody root parenten (upperbody root muss zu dem zeitpunkt seine position haben)
+   -> lokale position auslesen => store in anim
+   
+   
+----
